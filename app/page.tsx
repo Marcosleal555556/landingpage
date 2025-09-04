@@ -1,95 +1,45 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
 
-export default function Home() {
+import CTA from "@/components/CTA";
+
+const TELEGRAM_URL =
+  process.env.NEXT_PUBLIC_TELEGRAM_URL || "https://t.me/bonusgreenvip_bot";
+
+export default function Page() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+    <main className="min-h-screen bg-slate-950 text-slate-100">
+      {/* Navbar super simples */}
+      <header className="sticky top-0 z-20 border-b border-white/10 bg-slate-950/70 backdrop-blur">
+        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
+          <div className="font-semibold tracking-tight">Bônus Green</div>
+          <CTA href={TELEGRAM_URL} label="navbar">Entrar no teste</CTA>
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </header>
+
+      {/* HERO base */}
+      <section className="mx-auto max-w-6xl px-4 py-16 sm:py-24">
+        <p className="mb-3 text-xs uppercase tracking-wide text-slate-400">
+          7 dias grátis — acesso imediato
+        </p>
+        <h1 className="text-balance text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+          Mais de 380 pessoas lucrando todos os dias — sem fórmula mágica.
+        </h1>
+        <p className="mt-5 max-w-xl text-lg text-slate-300">
+          Quem tá na <span className="font-semibold">lista de espera</span> já tá recebendo
+          entrada pra entender o fluxo e aproveitar melhor o teste do VIP.
+        </p>
+        <div className="mt-8 flex flex-wrap items-center gap-3">
+          <CTA href={TELEGRAM_URL} label="hero">Quero 7 dias grátis</CTA>
+          <a href="#mais" className="btn-ghost">Saber mais</a>
+        </div>
+      </section>
+
+      {/* Placeholder pra futuras seções */}
+      <section id="mais" className="border-t border-white/10 py-16 sm:py-24">
+        <div className="mx-auto max-w-6xl px-4 text-slate-300">
+          Base pronta. Próximos passos: Resultados, FAQ e Pixel (GTM/Meta).
+        </div>
+      </section>
+    </main>
   );
 }
