@@ -1,6 +1,7 @@
 "use client";
 
 import CTA from "@/components/CTA";
+import { CheckCircle } from "lucide-react";
 
 const TELEGRAM_URL =
   process.env.NEXT_PUBLIC_TELEGRAM_URL || "https://t.me/bonusgreenvip_bot";
@@ -30,14 +31,61 @@ export default function Page() {
         </p>
         <div className="mt-8 flex flex-wrap items-center gap-3">
           <CTA href={TELEGRAM_URL} label="hero">Quero 7 dias grátis</CTA>
-          <a href="#mais" className="btn-ghost">Saber mais</a>
+          {/* aponta direto para resultados */}
+          <a href="#resultados" className="btn-ghost">Saber mais</a>
         </div>
       </section>
 
-      {/* Placeholder pra futuras seções */}
-      <section id="mais" className="border-t border-white/10 py-16 sm:py-24">
-        <div className="mx-auto max-w-6xl px-4 text-slate-300">
-          Base pronta. Próximos passos: Resultados, FAQ e Pixel (GTM/Meta).
+      {/* RESULTADOS (base) */}
+      <section id="resultados" className="border-t border-white/10 py-16 sm:py-24">
+        <div className="mx-auto max-w-6xl px-4">
+          <h2 className="text-2xl font-semibold">Resultados</h2>
+          <p className="mt-2 max-w-3xl text-slate-300">
+            Números reais, processo simples e execução guiada. Atualize estes cards com seus prints e metas.
+          </p>
+
+          <div className="mt-8 grid gap-6 sm:grid-cols-3">
+            {[
+              { k: "+R$ 1.000", v: "em um dia de oportunidades" },
+              { k: "370 → 380+", v: "assinantes sem tráfego pago" },
+              { k: "R$ 25 vitalício", v: "por indicação aprovada" },
+            ].map((item) => (
+              <div key={item.k} className="card flex items-center gap-4">
+                <CheckCircle className="h-6 w-6 text-blue-300" />
+                <div>
+                  <div className="text-xl font-semibold">{item.k}</div>
+                  <div className="text-slate-300">{item.v}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ (base) */}
+      <section id="faq" className="border-t border-white/10 bg-white/5 py-16 sm:py-24">
+        <div className="mx-auto max-w-6xl px-4">
+          <h2 className="text-2xl font-semibold">Perguntas frequentes</h2>
+          <div className="mt-6 grid gap-4 sm:grid-cols-3">
+            <div className="card">
+              <div className="font-semibold">É realmente sem risco?</div>
+              <p className="mt-2 text-slate-300">
+                Seguimos um plano com proteções. Quando executado corretamente, o risco operacional é neutralizado.
+              </p>
+            </div>
+            <div className="card">
+              <div className="font-semibold">Preciso já saber tudo?</div>
+              <p className="mt-2 text-slate-300">
+                Não. Na lista de espera você já recebe entradas para aprender o fluxo antes do teste do VIP.
+              </p>
+            </div>
+            <div className="card">
+              <div className="font-semibold">Como falo com alguém?</div>
+              <p className="mt-2 text-slate-300">
+                Abra o bot pelo botão e mande sua dúvida. Respondemos rápido e sem enrolação.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
     </main>
