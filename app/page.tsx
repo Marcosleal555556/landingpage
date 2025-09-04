@@ -22,7 +22,7 @@ export default function Page() {
         <p className="mb-3 text-xs uppercase tracking-wide text-slate-400">
           7 dias grátis — acesso imediato
         </p>
-        <h1 className="text-balance text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+        <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
           Mais de 380 pessoas lucrando todos os dias — sem fórmula mágica.
         </h1>
         <p className="mt-5 max-w-xl text-lg text-slate-300">
@@ -31,8 +31,12 @@ export default function Page() {
         </p>
         <div className="mt-8 flex flex-wrap items-center gap-3">
           <CTA href={TELEGRAM_URL} label="hero">Quero 7 dias grátis</CTA>
-          {/* aponta direto para resultados */}
-          <a href="#resultados" className="btn-ghost">Saber mais</a>
+          <a
+            href="#resultados"
+            className="inline-flex items-center gap-2 rounded-2xl px-5 py-3 font-medium transition bg-white/5 text-white hover:bg-white/10 ring-1 ring-white/10"
+          >
+            Saber mais
+          </a>
         </div>
       </section>
 
@@ -50,7 +54,10 @@ export default function Page() {
               { k: "370 → 380+", v: "assinantes sem tráfego pago" },
               { k: "R$ 25 vitalício", v: "por indicação aprovada" },
             ].map((item) => (
-              <div key={item.k} className="card flex items-center gap-4">
+              <div
+                key={item.k}
+                className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur p-6 flex items-center gap-4"
+              >
                 <CheckCircle className="h-6 w-6 text-blue-300" />
                 <div>
                   <div className="text-xl font-semibold">{item.k}</div>
@@ -67,19 +74,19 @@ export default function Page() {
         <div className="mx-auto max-w-6xl px-4">
           <h2 className="text-2xl font-semibold">Perguntas frequentes</h2>
           <div className="mt-6 grid gap-4 sm:grid-cols-3">
-            <div className="card">
+            <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur p-6">
               <div className="font-semibold">É realmente sem risco?</div>
               <p className="mt-2 text-slate-300">
                 Seguimos um plano com proteções. Quando executado corretamente, o risco operacional é neutralizado.
               </p>
             </div>
-            <div className="card">
+            <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur p-6">
               <div className="font-semibold">Preciso já saber tudo?</div>
               <p className="mt-2 text-slate-300">
                 Não. Na lista de espera você já recebe entradas para aprender o fluxo antes do teste do VIP.
               </p>
             </div>
-            <div className="card">
+            <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur p-6">
               <div className="font-semibold">Como falo com alguém?</div>
               <p className="mt-2 text-slate-300">
                 Abra o bot pelo botão e mande sua dúvida. Respondemos rápido e sem enrolação.

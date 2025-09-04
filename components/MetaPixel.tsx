@@ -5,25 +5,26 @@ import { usePathname, useSearchParams } from "next/navigation";
 
 declare global {
   interface Window {
-    fbq?: (...args: any[]) => void;
+    fbq?: (method: string, ...args: unknown[]) => void;
   }
 }
 
 const pixelId = process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID;
 
 export default function MetaPixel() {
-  // Sem PIXEL_ID? Não injeta nada (seguro pra dev e antes da campanha).
-  if (!pixelId) return null;
-
+  // Chame os hooks SEMPRE (regra dos hooks)
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  // PageView a cada navegação (App Router)
+  // PageView a cada navegação
   useEffect(() => {
-    if (typeof window.fbq === "function") {
+    if (typeof window !== "undefined" && typeof window.fbq === "function") {
       window.fbq("track", "PageView");
     }
   }, [pathname, searchParams]);
+
+  // Sem Pixel ID? Não injeta scripts
+  if (!pixelId) return null;
 
   return (
     <>
@@ -32,11 +33,11 @@ export default function MetaPixel() {
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
 n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');fbq('init', '${pixelId}');fbq('track', 'PageView');`}
+'https://connect.facebook.net/en_US/fbevents.js');fbq('init','${pixelId}');fbq('track','PageView');`}
       </Script>
 
-      {/* Fallback sem JS */}
       <noscript>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           height="1"
           width="1"

@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 declare global {
   interface Window {
-    fbq?: (...args: any[]) => void;
+    fbq?: (method: string, ...args: unknown[]) => void;
   }
 }
 
@@ -16,11 +16,10 @@ export default function CTA({
   href: string;
   children: React.ReactNode;
   event?: string;
-  label?: string; // ex.: "hero", "navbar", etc.
+  label?: string; // ex.: "hero", "navbar"
 }) {
   const onClick = () => {
     if (typeof window !== "undefined" && typeof window.fbq === "function") {
-      // Envia o evento só se o Pixel estiver ativo
       if (label) {
         window.fbq("track", event, { label });
       } else {
@@ -35,7 +34,7 @@ export default function CTA({
       whileTap={{ scale: 0.98 }}
       href={href}
       onClick={onClick}
-      className="btn-primary"
+      className="inline-flex items-center gap-2 rounded-2xl px-5 py-3 font-medium transition bg-blue-600 text-white hover:bg-blue-700 shadow-lg"
     >
       {children}
     </motion.a>
