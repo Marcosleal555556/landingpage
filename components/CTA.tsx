@@ -12,11 +12,13 @@ export default function CTA({
   children,
   event = "Lead",
   label,
+  className,
 }: {
   href: string;
   children: React.ReactNode;
   event?: string;
-  label?: string; // ex.: "hero", "navbar"
+  label?: string;        // ex.: "hero"
+  className?: string;    // permite customizar cor/estilo do botão
 }) {
   const onClick = () => {
     if (typeof window !== "undefined" && typeof window.fbq === "function") {
@@ -28,14 +30,17 @@ export default function CTA({
     }
   };
 
+  // estilo padrão (se não passar className)
+  const base =
+    "inline-flex items-center gap-2 rounded-2xl px-5 py-3 font-medium transition bg-[color:var(--brand-1)] text-slate-900 hover:bg-[color:var(--brand-1)]/90 shadow-lg";
+
   return (
     <motion.a
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.98 }}
       href={href}
       onClick={onClick}
-      className="inline-flex items-center gap-2 rounded-2xl px-5 py-3 font-medium transition bg-blue-600 text-white hover:bg-blue-700 shadow-lg btn-neon"
-
+      className={className ?? base}
     >
       {children}
     </motion.a>

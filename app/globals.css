@@ -1,127 +1,63 @@
 @import "tailwindcss";
-/* === Texto com brilho passando (shimmer) === */
-@keyframes shimmer {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+
+/* ===== Paleta da marca (da tua logo) ===== */
+:root{
+  --brand-bg: #0A0F1A; /* fundo */
+  --brand-1: #DEC373;  /* ouro */
+  --brand-2: #1A3835;  /* teal escuro */
+  --brand-3: #3A1925;  /* vinho */
 }
 
-.shimmer-text {
-  background: linear-gradient(90deg, #60a5fa, #a78bfa, #f472b6, #60a5fa);
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: shimmer 3s linear infinite;
-}
-
-/* glow suave no texto (usa drop-shadow pra “brilhar”) */
-.text-glow {
-  filter: drop-shadow(0 0 12px rgba(99, 102, 241, .6));
-}
-
-/* === Botão neon (hover) === */
-.btn-neon {
-  position: relative;
-  isolation: isolate;
-  box-shadow: 0 0 0 rgba(99,102,241,0); /* azul-500 */
-}
-
-.btn-neon:hover {
-  box-shadow:
-    0 0 12px rgba(99,102,241,.7),
-    0 0 24px rgba(99,102,241,.35);
-}
-
-.btn-neon::after {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: 20px;
-  background: radial-gradient(120px 60px at var(--mx,50%) 50%, rgba(99,102,241,.35), transparent 70%);
-  z-index: -1;
-  transition: 120ms ease;
-}
-/* === Borda gradiente animada nos cards === */
-@keyframes border-flow {
-  0%   { background-position: 0% 50%; }
-  100% { background-position: 200% 50%; }
-}
-
-.card-animated {
-  position: relative;
-  border-radius: 24px;
-  background: #0b1020;                       /* fallback */
-}
-
-.card-animated::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 24px;
-  padding: 1px;                               /* espessura da borda */
-  background: linear-gradient(90deg,
-    #60a5fa, #a78bfa, #f472b6, #60a5fa);
-  background-size: 200% 100%;
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  animation: border-flow 6s linear infinite;
-}
-
-.card-animated > .inner {
-  border-radius: 22px;
-  background: rgba(255,255,255,.04);
-  backdrop-filter: blur(6px);
-}
-/* === Glow circular pro logo === */
-@keyframes ringPulse {
-  0%,100% { opacity: .45; transform: scale(1); }
-  50%     { opacity: .15; transform: scale(1.06); }
-}
-.logo-glow {
-  position: absolute;
-  inset: -16px;                 /* tamanho do halo ao redor */
-  border-radius: 9999px;
-  background:
-    radial-gradient(50% 50% at 50% 50%,
-      rgba(96,165,250,.55) 0%,      /* azul-400 */
-      rgba(167,139,250,.40) 35%,    /* roxo-400 */
-      rgba(244,114,182,.25) 60%,    /* rosa-400 */
-      transparent 70%);
-  filter: blur(14px);
-  animation: ringPulse 4s ease-in-out infinite;
-  pointer-events: none;
-}
-
-/* === Anel gradiente só na borda do avatar === */
-@keyframes ring-flow {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 200% 50%; }
-}
-.avatar-glow {
-  position: relative;
-  display: inline-block;
-  border-radius: 9999px;           /* círculo */
-}
-.avatar-glow::before {
-  content: "";
-  position: absolute;
-  inset: -2px;                      /* expande um pouquinho pra fora */
-  padding: 2px;                     /* espessura do anel (ajuste aqui) */
-  border-radius: 9999px;
-  background: linear-gradient(90deg, #60a5fa, #a78bfa, #f472b6, #60a5fa);
-  background-size: 200% 100%;
-  animation: ring-flow 6s linear infinite;  /* remova esta linha se quiser sem animação */
-  /* Faz o “furo” no centro para não tingir a imagem */
-  -webkit-mask: 
-    linear-gradient(#000 0 0) content-box, 
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  pointer-events: none;
-}
-
-
+/* base */
 html, body { height: 100%; }
+
+/* ===== Título com brilho (shimmer) só em tons claros ===== */
+@keyframes shimmerGold { 0%{background-position:300% 0} 100%{background-position:-300% 0} }
+.shimmer-text{
+  /* variações claras de dourado p/ não escurecer o texto */
+  --gold:       #DEC373;
+  --gold-lite:  #F1E6BE;
+  --gold-warm:  #EAD08A;
+
+  background-image: linear-gradient(
+    90deg,
+    var(--gold) 0%,
+    var(--gold-lite) 25%,
+    var(--gold) 50%,
+    var(--gold-warm) 75%,
+    var(--gold) 100%
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+  animation: shimmerGold 7s linear infinite; /* mais lento e suave */
+}
+.text-glow{
+  filter:
+    drop-shadow(0 0 14px rgba(222,195,115,.50))
+    drop-shadow(0 0 4px rgba(222,195,115,.35));
+}
+
+/* ===== Anel de brilho só na borda do avatar (logo redonda) ===== */
+@keyframes ring-flow { 0%{background-position:0% 50%} 100%{background-position:200% 50%} }
+.avatar-glow{ position:relative; display:inline-block; border-radius:9999px; }
+.avatar-glow::before{
+  content:""; position:absolute; inset:-2px; padding:2px; border-radius:9999px;
+  background: linear-gradient(90deg, var(--brand-1), var(--brand-2), var(--brand-3), var(--brand-1));
+  background-size:200% 100%; animation: ring-flow 12s linear infinite;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  pointer-events:none;
+}
+
+/* ===== Borda gradiente animada dos cards (Resultados) ===== */
+@keyframes border-flow { 0%{background-position:0% 50%} 100%{background-position:200% 50%} }
+.card-animated{ position:relative; border-radius:24px; background: rgba(255,255,255,.02); }
+.card-animated::before{
+  content:""; position:absolute; inset:0; border-radius:24px; padding:1px;
+  background: linear-gradient(90deg, var(--brand-1), var(--brand-2), var(--brand-3), var(--brand-1));
+  background-size:200% 100%; animation: border-flow 12s linear infinite;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+}
+.card-animated > .inner{ border-radius:22px; background: rgba(255,255,255,.04); backdrop-filter: blur(6px); }
