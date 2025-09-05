@@ -147,7 +147,7 @@ export default function Page() {
       <section id="resultados" className="relative z-10 py-14 sm:py-20">
         <div className="mx-auto max-w-6xl px-4">
           <h2 className="text-center text-2xl sm:text-3xl font-semibold">
-            Confira como é por dentro👇
+            Espia aí👇
           </h2>
 
         {/* container tipo “largura de celular” (um pouco menor) */}
