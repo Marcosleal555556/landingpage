@@ -10,10 +10,10 @@ const TELEGRAM_URL =
 export default function Page() {
   return (
     <main className="relative min-h-screen bg-[color:var(--brand-bg)] text-slate-100 overflow-hidden">
-      {/* BACKGROUND: spotlight dourado (posicionado mais alto) */}
+      {/* BACKGROUND: spotlight dourado (mais alto) */}
       <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden>
         <div
-          className="mx-auto h-[26rem] max-w-5xl blur-3xl opacity-40"
+          className="mx-auto h-[28rem] max-w-5xl blur-3xl opacity-40"
           style={{ background: "radial-gradient(60% 60% at 50% 22%, rgba(222,195,115,.35) 0%, transparent 60%)" }}
         />
       </div>
@@ -31,75 +31,62 @@ export default function Page() {
         }}
       />
 
-      {/* HERO */}
-      <section className="mx-auto max-w-6xl px-4 py-8 sm:py-12">
-        {/* LOGO menor e mais perto do topo */}
-        <div className="mt-0 mb-3 flex justify-center">
+      {/* HERO — ocupa quase a tela inteira */}
+      <section className="mx-auto max-w-6xl px-4 min-h-[92svh] flex flex-col items-center justify-center">
+        {/* LOGO maior e mais próxima do topo */}
+        <div className="mb-3 flex justify-center">
           <div className="avatar-glow">
             <Image
               src="/bonus-green.jpg"
               alt="Bônus Green"
-              width={120}
-              height={120}
+              width={240}
+              height={240}
               priority
-              className="rounded-full object-cover block"
+              className="rounded-full object-cover block w-40 h-40 sm:w-48 sm:h-48 lg:w-56 lg:h-56"
             />
           </div>
         </div>
 
-        {/* selo */}
-        <p className="mb-2 text-[11px] sm:text-xs uppercase tracking-wide text-center text-slate-400">
+        {/* selo pequeno */}
+        <p className="mb-1 text-[11px] sm:text-xs uppercase tracking-wide text-center text-slate-400">
           7 dias grátis — acesso imediato
         </p>
 
-        {/* TÍTULO */}
+        {/* TÍTULO: apenas o dourado (maior) */}
         <h1 className="text-center font-bold">
-          <span className="block leading-[1.08]">
-            <span className="block shimmer-text text-glow text-3xl sm:text-4xl lg:text-5xl">
-              COMECE SUA
-            </span>
-            <span className="block shimmer-text text-glow text-3xl sm:text-4xl lg:text-5xl">
-              JORNADA COM
-            </span>
-            <span className="block shimmer-text text-glow text-3xl sm:text-4xl lg:text-5xl">
-              BÔNUS ESPORTIVOS!
-            </span>
+          <span className="block shimmer-text text-glow leading-[1.05] text-5xl sm:text-6xl lg:text-7xl">
+            COMECE SUA
           </span>
-          <span className="block mt-1 text-2xl sm:text-3xl lg:text-4xl text-white leading-[1.12]">
-            7 DIAS DE TESTE GRÁTIS!
+          <span className="block shimmer-text text-glow leading-[1.05] text-5xl sm:text-6xl lg:text-7xl">
+            JORNADA COM
+          </span>
+          <span className="block shimmer-text text-glow leading-[1.05] text-5xl sm:text-6xl lg:text-7xl">
+            BÔNUS ESPORTIVOS!
           </span>
         </h1>
 
-        {/* Subtexto curto */}
-        <p className="mt-3 mx-auto max-w-2xl text-center">
-          <span className="block text-base sm:text-lg font-semibold text-white/95">
-            380+ membros já acompanham alertas diários e passo a passo
-          </span>
-        </p>
-
-        {/* CTA com logo Telegram (webp) + animações do globals.css */}
-        <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+        {/* CTA dominante — logo Telegram + gradiente animado + pulso */}
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
           <CTA
             href={TELEGRAM_URL}
             label="hero"
-            className="cta-telegram cta-pulse inline-flex items-center gap-2 rounded-2xl px-7 py-4 text-base sm:text-lg font-semibold text-white"
+            className="cta-telegram cta-pulse inline-flex items-center gap-3 rounded-2xl px-8 py-5 text-lg sm:text-xl font-extrabold text-white"
           >
-           <Image
-  src="/telegram-blue.webp"
-  alt="Telegram"
-  width={35}
-  height={35}
-  priority
-  className="shrink-0 rounded-full -translate-y-[1px]"
-/>
-
+            <Image
+              src="/telegram-blue.webp"  // coloque este arquivo em /public
+              alt="Telegram"
+              width={22}
+              height={22}
+              priority
+              className="shrink-0 rounded-full -translate-y-[1px]"
+            />
             LIBERAR MEU TESTE!
           </CTA>
         </div>
       </section>
 
       {/* RESULTADOS */}
-      <section id="resultados" className="border-t border-white/10 py-12 sm:py-18">
+      <section id="resultados" className="border-t border-white/10 py-14 sm:py-20">
         <div className="mx-auto max-w-6xl px-4">
           <h2 className="text-2xl font-semibold">Resultados</h2>
           <p className="mt-2 max-w-3xl text-slate-300">
@@ -127,7 +114,7 @@ export default function Page() {
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="border-t border-white/10 bg-white/5 py-12 sm:py-18">
+      <section id="faq" className="border-t border-white/10 bg-white/5 py-14 sm:py-20">
         <div className="mx-auto max-w-6xl px-4">
           <h2 className="text-2xl font-semibold">Perguntas frequentes</h2>
           <div className="mt-6 grid gap-4 sm:grid-cols-3">
