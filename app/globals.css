@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* ===== Paleta da marca (da tua logo) ===== */
+/* ===== Paleta da marca ===== */
 :root{
   --brand-bg: #0A0F1A; /* fundo */
   --brand-1: #DEC373;  /* ouro */
@@ -14,11 +14,9 @@ html, body { height: 100%; }
 /* ===== Título com brilho (shimmer) só em tons claros ===== */
 @keyframes shimmerGold { 0%{background-position:300% 0} 100%{background-position:-300% 0} }
 .shimmer-text{
-  /* variações claras de dourado p/ não escurecer o texto */
   --gold:       #DEC373;
   --gold-lite:  #F1E6BE;
   --gold-warm:  #EAD08A;
-
   background-image: linear-gradient(
     90deg,
     var(--gold) 0%,
@@ -30,7 +28,7 @@ html, body { height: 100%; }
   background-size: 300% 100%;
   -webkit-background-clip: text; background-clip: text;
   color: transparent;
-  animation: shimmerGold 7s linear infinite; /* mais lento e suave */
+  animation: shimmerGold 7s linear infinite; /* suave */
 }
 .text-glow{
   filter:
@@ -60,7 +58,9 @@ html, body { height: 100%; }
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude;
 }
-/* === CTA Telegram: gradiente animado + brilho em sweep + pulso === */
+.card-animated > .inner{ border-radius:22px; background: rgba(255,255,255,.04); backdrop-filter: blur(6px); }
+
+/* ===== CTA Telegram: gradiente animado + brilho em sweep + pulso ===== */
 @keyframes tgGradient { 0%{background-position:0% 50%} 100%{background-position:200% 50%} }
 @keyframes shineSweep {
   0%   { transform: translateX(-160%) skewX(-20deg); }
@@ -94,4 +94,94 @@ html, body { height: 100%; }
 }
 .cta-pulse{ animation: pulseSoft 2.8s ease-in-out infinite; }
 
-.card-animated > .inner{ border-radius:22px; background: rgba(255,255,255,.04); backdrop-filter: blur(6px); }
+/* ===== BG mágico: aurora + grid + vignette ===== */
+@keyframes auroraFloatX { 0% {transform: translateX(-10%)} 100% {transform: translateX(10%)} }
+@keyframes auroraFloatY { 0% {transform: translateY(-6%)} 100% {transform: translateY(6%)} }
+@keyframes auroraSpin   { 0% {transform: rotate(0deg)} 100% {transform: rotate(360deg)} }
+
+.bg-aurora {
+  position: absolute;
+  inset: -8%;
+  pointer-events: none;
+  z-index: -10;
+  overflow: hidden;
+  mix-blend-mode: screen;
+}
+/* 3 feixes conic-gradient usando a paleta */
+.bg-aurora .beam {
+  position: absolute;
+  width: 75vw; height: 75vw;
+  border-radius: 9999px;
+  filter: blur(70px);
+  opacity: .35;
+  background:
+    conic-gradient(
+      from 210deg,
+      rgba(0,0,0,0) 0%,
+      rgba(222,195,115,.30) 12%,
+      rgba(26,56,53,.25) 32%,
+      rgba(58,25,37,.22) 52%,
+      rgba(222,195,115,.25) 66%,
+      rgba(0,0,0,0) 82%
+    );
+}
+.bg-aurora .b1 { top: -10%; left: -10%;
+  animation: auroraFloatX 18s ease-in-out infinite alternate,
+             auroraFloatY 24s ease-in-out infinite alternate-reverse;
+}
+.bg-aurora .b2 { bottom: -12%; right: -8%; opacity:.28;
+  animation: auroraFloatX 22s ease-in-out infinite alternate-reverse,
+             auroraFloatY 26s ease-in-out infinite alternate;
+}
+.bg-aurora .b3 { top: 10%; right: 20%; opacity:.22;
+  animation: auroraSpin 90s linear infinite,
+             auroraFloatY 20s ease-in-out infinite alternate;
+}
+
+/* grid sutil com máscara radial */
+.bg-grid {
+  position: absolute; inset: 0; z-index: -10; pointer-events: none;
+  opacity: .35;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,.07) 1px, transparent 1px);
+  background-size: 26px 26px;
+  -webkit-mask-image: radial-gradient(70% 60% at 50% 30%, black 60%, transparent 100%);
+          mask-image: radial-gradient(70% 60% at 50% 30%, black 60%, transparent 100%);
+}
+
+/* vinheta nas bordas pra focar no centro */
+.bg-vignette {
+  position:absolute; inset:0; z-index:-10; pointer-events:none;
+  background: radial-gradient(120% 70% at 50% 40%, transparent 60%, rgba(0,0,0,.45) 100%);
+}
+
+/* === Divisor brilhante (glow + animação opcional) === */
+@keyframes dividerFlow { 
+  0% { background-position: 0% 50%; } 
+  100% { background-position: 200% 50%; } 
+}
+.divider-glow{
+  position: relative;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(222,195,115,.95), transparent);
+}
+.divider-glow::after{
+  content:"";
+  position: absolute;
+  left: 0; right: 0; top: -10px;
+  height: 22px;                     /* “halo” ao redor da linha */
+  background: linear-gradient(90deg, transparent, rgba(222,195,115,.45), transparent);
+  filter: blur(10px);
+  opacity: .75;
+  pointer-events: none;
+}
+.divider-glow.animated{
+  background-size: 200% 100%;
+  animation: dividerFlow 8s linear infinite;
+}
+.divider-glow.animated::after{
+  background-size: 200% 100%;
+  animation: dividerFlow 8s linear infinite;
+}
+

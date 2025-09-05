@@ -2,38 +2,37 @@
 
 import CTA from "@/components/CTA";
 import Image from "next/image";
-import { CheckCircle } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 const TELEGRAM_URL =
   process.env.NEXT_PUBLIC_TELEGRAM_URL || "https://t.me/bonusgreenvip_bot";
 
+/** Imagens do carrossel (exatamente estes nomes em /public) */
+/** Imagens do carrossel (exatamente estes nomes em /public) */
+const ENTRADAS = [
+  "/procedimento.png",
+  "/procedimento1.png",
+  "/procedimento2.png",
+  "/procedimento3.png",
+  "/procedimento4.png",
+];
+
+
 export default function Page() {
   return (
     <main className="relative min-h-screen bg-[color:var(--brand-bg)] text-slate-100 overflow-hidden">
-      {/* BACKGROUND: spotlight dourado (mais alto) */}
-      <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden>
-        <div
-          className="mx-auto h-[28rem] max-w-5xl blur-3xl opacity-40"
-          style={{ background: "radial-gradient(60% 60% at 50% 22%, rgba(222,195,115,.35) 0%, transparent 60%)" }}
-        />
-      </div>
+      {/* BG mágico: aurora + grid + vignette */}
+      {/* container tipo “largura de celular” (um pouco menor) */}
+<div className="mt-8 mx-auto w-full max-w-[340px] sm:max-w-[400px]">
+  <Carousel images={ENTRADAS} interval={3500} />
+</div>
 
-      {/* BACKGROUND: grid sutil */}
-      <div
-        className="pointer-events-none absolute inset-0 -z-10 opacity-35"
-        aria-hidden
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, rgba(255,255,255,.07) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,.07) 1px, transparent 1px)",
-          backgroundSize: "26px 26px",
-          WebkitMaskImage: "radial-gradient(70% 60% at 50% 24%, black 60%, transparent 100%)",
-          maskImage: "radial-gradient(70% 60% at 50% 24%, black 60%, transparent 100%)",
-        }}
-      />
+      <div className="bg-grid" aria-hidden="true" />
+      <div className="bg-vignette" aria-hidden="true" />
 
       {/* HERO — ocupa quase a tela inteira */}
-      <section className="mx-auto max-w-6xl px-4 min-h-[92svh] flex flex-col items-center justify-center">
-        {/* LOGO maior e mais próxima do topo */}
+      <section className="relative z-10 mx-auto max-w-6xl px-4 min-h-[92svh] flex flex-col items-center justify-center">
+        {/* LOGO maior */}
         <div className="mb-3 flex justify-center">
           <div className="avatar-glow">
             <Image
@@ -73,7 +72,7 @@ export default function Page() {
             className="cta-telegram cta-pulse inline-flex items-center gap-3 rounded-2xl px-8 py-5 text-lg sm:text-xl font-extrabold text-white"
           >
             <Image
-              src="/telegram-blue.webp"  // coloque este arquivo em /public
+              src="/telegram-blue.webp"  // arquivo em /public
               alt="Telegram"
               width={22}
               height={22}
@@ -85,38 +84,36 @@ export default function Page() {
         </div>
       </section>
 
-      {/* RESULTADOS */}
-      <section id="resultados" className="border-t border-white/10 py-14 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4">
-          <h2 className="text-2xl font-semibold">Resultados</h2>
-          <p className="mt-2 max-w-3xl text-slate-300">
-            Números reais, processo simples e execução guiada. Atualize estes cards com seus prints e metas.
-          </p>
+      {/* DIVISOR brilhante */}
+      <div className="relative z-10 mx-auto max-w-6xl px-4">
+        <div className="divider-glow animated" />
+      </div>
 
-          <div className="mt-8 grid gap-6 sm:grid-cols-3">
-            {[
-              { k: "+R$ 1.000", v: "em um dia de oportunidades" },
-              { k: "370 → 380+", v: "assinantes sem tráfego pago" },
-              { k: "R$ 25 vitalício", v: "por indicação aprovada" },
-            ].map((item) => (
-              <div key={item.k} className="card-animated">
-                <div className="inner p-6 flex items-center gap-4">
-                  <CheckCircle className="h-6 w-6 text-blue-300" />
-                  <div>
-                    <div className="text-xl font-semibold">{item.k}</div>
-                    <div className="text-slate-300">{item.v}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
+      {/* RESULTADOS -> Texto + Carrossel retrato */}
+      <section id="resultados" className="relative z-10 py-14 sm:py-20">
+        <div className="mx-auto max-w-6xl px-4">
+          <h2 className="text-center text-2xl sm:text-3xl font-semibold">
+            Confira algumas entradas
+          </h2>
+
+          {/* container tipo “largura de celular” */}
+          <div className="mt-8 mx-auto w-full max-w-[430px] sm:max-w-[500px]">
+            <Carousel images={ENTRADAS} interval={3500} />
           </div>
         </div>
       </section>
 
+      {/* DIVISOR brilhante */}
+      <div className="relative z-10 mx-auto max-w-6xl px-4">
+        <div className="divider-glow animated" />
+      </div>
+
       {/* FAQ */}
-      <section id="faq" className="border-t border-white/10 bg-white/5 py-14 sm:py-20">
+      <section id="faq" className="relative z-10 bg-white/5 py-14 sm:py-20">
         <div className="mx-auto max-w-6xl px-4">
-          <h2 className="text-2xl font-semibold">Perguntas frequentes</h2>
+          <h2 className="text-2xl font-semibold text-center sm:text-left">
+            Perguntas frequentes
+          </h2>
           <div className="mt-6 grid gap-4 sm:grid-cols-3">
             <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur p-6">
               <div className="font-semibold">É realmente sem risco?</div>
@@ -140,5 +137,100 @@ export default function Page() {
         </div>
       </section>
     </main>
+  );
+}
+
+/* ================
+   Carrossel retrato
+   ================ */
+function Carousel({
+  images,
+  interval = 3500,
+}: {
+  images: string[];
+  interval?: number;
+}) {
+  const [index, setIndex] = useState(0);
+  const paused = useRef(false);
+  const startX = useRef<number | null>(null);
+  const count = images.length;
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      if (!paused.current) setIndex((i) => (i + 1) % count);
+    }, interval);
+    return () => clearInterval(id);
+  }, [count, interval]);
+
+  const go = (dir: number) => setIndex((i) => (i + dir + count) % count);
+
+  return (
+    <div
+      className="relative select-none"
+      onMouseEnter={() => (paused.current = true)}
+      onMouseLeave={() => (paused.current = false)}
+      onTouchStart={(e) => (startX.current = e.touches[0].clientX)}
+      onTouchEnd={(e) => {
+        if (startX.current === null) return;
+        const dx = e.changedTouches[0].clientX - startX.current;
+        if (Math.abs(dx) > 40) go(dx > 0 ? -1 : 1);
+        startX.current = null;
+      }}
+    >
+      {/* moldura tipo phone */}
+      <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur">
+        {/* trilho */}
+        <div
+          className="flex transition-transform duration-500 ease-out"
+          style={{ transform: `translateX(-${index * 100}%)` }}
+        >
+          {images.map((src, i) => (
+            <div key={src + i} className="min-w-full">
+              {/* quadro com proporção retrato */}
+              <div className="relative w-full aspect-[9/16] sm:aspect-[10/16] bg-black/30">
+                <Image
+                  src={src}
+                  alt={`Entrada ${i + 1}`}
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 640px) 100vw, 500px"
+                  priority={i === 0}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* setas */}
+      <button
+        aria-label="Imagem anterior"
+        onClick={() => go(-1)}
+        className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-black/40 hover:bg-black/60 px-3 py-2 text-white backdrop-blur"
+      >
+        ‹
+      </button>
+      <button
+        aria-label="Próxima imagem"
+        onClick={() => go(1)}
+        className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black/40 hover:bg-black/60 px-3 py-2 text-white backdrop-blur"
+      >
+        ›
+      </button>
+
+      {/* bullets */}
+      <div className="mt-3 flex justify-center gap-2">
+        {images.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setIndex(i)}
+            aria-label={`Ir para imagem ${i + 1}`}
+            className={`h-2.5 w-2.5 rounded-full transition ${
+              i === index ? "bg-white" : "bg-white/40 hover:bg-white/70"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
