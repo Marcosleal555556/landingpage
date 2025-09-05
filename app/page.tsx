@@ -3,6 +3,8 @@
 import CTA from "@/components/CTA";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { Rocket, ListChecks, ShieldCheck } from "lucide-react";
 
 const TELEGRAM_URL =
   process.env.NEXT_PUBLIC_TELEGRAM_URL || "https://t.me/bonusgreenvip_bot";
@@ -19,7 +21,7 @@ const ENTRADAS = [
 export default function Page() {
   return (
     <main className="relative min-h-screen bg-[color:var(--brand-bg)] text-slate-100 overflow-hidden">
-      {/* BG (grid + vignette). Deixei sem a aurora, como combinamos */}
+      {/* BG (grid + vignette) */}
       <div className="bg-grid" aria-hidden="true" />
       <div className="bg-vignette" aria-hidden="true" />
 
@@ -82,16 +84,56 @@ export default function Page() {
         <div className="divider-glow animated" />
       </div>
 
-      {/* RESULTADOS -> Texto + Carrossel retrato */}
-      <section id="resultados" className="relative z-10 py-14 sm:py-20">
+      {/* COMO FUNCIONA (meio da página) */}
+      <section id="como-funciona" className="relative z-10 py-14 sm:py-20">
         <div className="mx-auto max-w-6xl px-4">
-          <h2 className="text-center text-2xl sm:text-3xl font-semibold">
-            Confira algumas entradas
-          </h2>
+          <div className="flex flex-col items-center sm:flex-row sm:items-end sm:justify-between gap-3">
+            <h2 className="text-center sm:text-left text-2xl sm:text-3xl font-semibold">
+              Como funciona (3 passos)
+            </h2>
+            {/* contador ao vivo */}
+            <LiveCounter />
+          </div>
 
-          {/* container tipo “largura de celular” (um pouco menor) */}
-          <div className="mt-8 mx-auto w-full max-w-[320px] sm:max-w-[380px]">
-            <Carousel images={ENTRADAS} interval={3500} />
+          {/* 3 passos com ícones animados */}
+          <div className="mt-6 grid gap-4 sm:grid-cols-3">
+            <StepCard
+              icon={<Rocket className="h-6 w-6 text-black" />}
+              title="Entre no VIP por 7 dias grátis"
+              desc="Acesse o Telegram e já comece a receber entradas."
+              delay={0}
+            />
+            <StepCard
+              icon={<ListChecks className="h-6 w-6 text-black" />}
+              title="Siga o passo a passo"
+              desc="Entradas com links prontos e proteções explicadas."
+              delay={0.08}
+            />
+            <StepCard
+              icon={<ShieldCheck className="h-6 w-6 text-black" />}
+              title="Valide por conta própria"
+              desc="Curtiu os resultados? Continua. Se não, sai sem pagar."
+              delay={0.16}
+            />
+          </div>
+
+          {/* CTA final da seção */}
+          <div className="mt-10 flex justify-center">
+            <CTA
+              href={TELEGRAM_URL}
+              label="como-funciona-cta"
+              className="cta-telegram cta-pulse inline-flex items-center gap-3 rounded-2xl px-8 py-4 text-base sm:text-lg font-extrabold text-white"
+            >
+              <Image
+                src="/telegram-blue.webp"
+                alt="Telegram"
+                width={20}
+                height={20}
+                priority
+                className="shrink-0 rounded-full -translate-y-[1px]"
+              />
+              ENTRAR NO VIP
+            </CTA>
           </div>
         </div>
       </section>
@@ -101,41 +143,54 @@ export default function Page() {
         <div className="divider-glow animated" />
       </div>
 
-      {/* FAQ */}
-      <section id="faq" className="relative z-10 bg-white/5 py-14 sm:py-20">
+      {/* DEPOIMENTOS/Evidências no FINAL: carrossel */}
+      <section id="resultados" className="relative z-10 py-14 sm:py-20">
         <div className="mx-auto max-w-6xl px-4">
-          <h2 className="text-2xl font-semibold text-center sm:text-left">
-            Perguntas frequentes
+          <h2 className="text-center text-2xl sm:text-3xl font-semibold">
+            Confira como é por dentro👇
           </h2>
-          <div className="mt-6 grid gap-4 sm:grid-cols-3">
-            <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur p-6">
-              <div className="font-semibold">É realmente sem risco?</div>
-              <p className="mt-2 text-slate-300">
-                Seguimos um plano com proteções. Quando executado corretamente, o risco operacional é neutralizado.
-              </p>
-            </div>
-            <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur p-6">
-              <div className="font-semibold">Preciso já saber tudo?</div>
-              <p className="mt-2 text-slate-300">
-                Não. Na lista de espera você já recebe entradas para aprender o fluxo antes do teste do VIP.
-              </p>
-            </div>
-            <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur p-6">
-              <div className="font-semibold">Como falo com alguém?</div>
-              <p className="mt-2 text-slate-300">
-                Abra o bot pelo botão e mande sua dúvida. Respondemos rápido e sem enrolação.
-              </p>
-            </div>
+
+        {/* container tipo “largura de celular” (um pouco menor) */}
+          <div className="mt-8 mx-auto w-full max-w-[320px] sm:max-w-[380px]">
+            <Carousel images={ENTRADAS} interval={6000} />
+          </div>
+
+          {/* CTA abaixo do carrossel */}
+          <div className="mt-8 flex justify-center">
+            <CTA
+              href={TELEGRAM_URL}
+              label="carousel-cta"
+              className="cta-telegram cta-pulse inline-flex items-center gap-3 rounded-2xl px-8 py-4 text-base sm:text-lg font-extrabold text-white"
+            >
+              <Image
+                src="/telegram-blue.webp"
+                alt="Telegram"
+                width={20}
+                height={20}
+                priority
+                className="shrink-0 rounded-full -translate-y-[1px]"
+              />
+              ENTRAR NO VIP
+            </CTA>
           </div>
         </div>
       </section>
+
+      {/* FOOTER */}
+      <footer className="relative z-10 border-t border-white/10 py-8">
+        <div className="mx-auto max-w-6xl px-4 text-center text-xs sm:text-sm text-white/60">
+          © Bônus Green Copywriting — todos os direitos reservados.
+        </div>
+      </footer>
     </main>
   );
 }
 
-/* ================
-   Carrossel retrato
-   ================ */
+/* ===================
+   Componentes auxiliares
+   =================== */
+
+/** Carrossel retrato (auto + swipe) */
 function Carousel({
   images,
   interval = 3500,
@@ -224,6 +279,74 @@ function Carousel({
           />
         ))}
       </div>
+    </div>
+  );
+}
+
+/** Card de passo (com ícone animado) */
+function StepCard({
+  icon,
+  title,
+  desc,
+  delay = 0,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  desc: string;
+  delay?: number;
+}) {
+  return (
+    <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur p-6">
+      {/* selo numerado/ícone com animação suave */}
+      <motion.div
+        initial={{ y: 0 }}
+        animate={{ y: [-3, 3, -3] }}
+        transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut", delay }}
+        className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-full"
+        style={{
+          background:
+            "linear-gradient(135deg, rgba(241,230,190,1) 0%, rgba(222,195,115,1) 60%, rgba(204,170,90,1) 100%)",
+          boxShadow: "0 0 18px rgba(222,195,115,.45)",
+        }}
+      >
+        {icon}
+      </motion.div>
+      <div className="font-semibold">{title}</div>
+      <p className="mt-1 text-slate-300">{desc}</p>
+    </div>
+  );
+}
+
+/** Contador de pessoas online (simulação leve) */
+function LiveCounter() {
+  const [n, setN] = useState(() => {
+    const base = 22 + Math.round(Math.random() * 12); // 22–34
+    return base;
+  });
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setN((v) => {
+        const delta = Math.round((Math.random() - 0.5) * 4); // -2..+2
+        const next = Math.max(14, Math.min(58, v + delta)); // clamp 14–58
+        return next;
+      });
+    }, 5000 + Math.round(Math.random() * 3000)); // 5–8s
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <div
+      className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium text-black"
+      style={{
+        background:
+          "linear-gradient(135deg, rgba(241,230,190,1) 0%, rgba(222,195,115,1) 60%, rgba(204,170,90,1) 100%)",
+        boxShadow: "0 0 18px rgba(222,195,115,.35)",
+      }}
+      aria-live="polite"
+    >
+      <span className="inline-block h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,.9)]" />
+      <span>👀 {n} pessoas online agora</span>
     </div>
   );
 }
