@@ -23,8 +23,9 @@ export default function Page() {
           7 dias grátis — acesso imediato
         </p>
         <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-          Mais de 380 pessoas lucrando todos os dias — sem fórmula mágica.
-        </h1>
+  <span className="shimmer-text text-glow">Mais de 380 pessoas</span> lucrando todos os dias — sem fórmula mágica.
+</h1>
+
         <p className="mt-5 max-w-xl text-lg text-slate-300">
           Quem tá na <span className="font-semibold">lista de espera</span> já tá recebendo
           entrada pra entender o fluxo e aproveitar melhor o teste do VIP.
@@ -54,16 +55,16 @@ export default function Page() {
               { k: "370 → 380+", v: "assinantes sem tráfego pago" },
               { k: "R$ 25 vitalício", v: "por indicação aprovada" },
             ].map((item) => (
-              <div
-                key={item.k}
-                className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur p-6 flex items-center gap-4"
-              >
-                <CheckCircle className="h-6 w-6 text-blue-300" />
-                <div>
-                  <div className="text-xl font-semibold">{item.k}</div>
-                  <div className="text-slate-300">{item.v}</div>
-                </div>
-              </div>
+              <div key={item.k} className="card-animated">
+  <div className="inner p-6 flex items-center gap-4">
+    <CheckCircle className="h-6 w-6 text-blue-300" />
+    <div>
+      <div className="text-xl font-semibold">{item.k}</div>
+      <div className="text-slate-300">{item.v}</div>
+    </div>
+  </div>
+</div>
+
             ))}
           </div>
         </div>

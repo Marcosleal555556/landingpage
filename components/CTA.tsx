@@ -34,7 +34,8 @@ export default function CTA({
       whileTap={{ scale: 0.98 }}
       href={href}
       onClick={onClick}
-      className="inline-flex items-center gap-2 rounded-2xl px-5 py-3 font-medium transition bg-blue-600 text-white hover:bg-blue-700 shadow-lg"
+      className="inline-flex items-center gap-2 rounded-2xl px-5 py-3 font-medium transition bg-blue-600 text-white hover:bg-blue-700 shadow-lg btn-neon"
+
     >
       {children}
     </motion.a>
