@@ -7,8 +7,7 @@ import { useEffect, useRef, useState } from "react";
 const TELEGRAM_URL =
   process.env.NEXT_PUBLIC_TELEGRAM_URL || "https://t.me/bonusgreenvip_bot";
 
-/** Imagens do carrossel (exatamente estes nomes em /public) */
-/** Imagens do carrossel (exatamente estes nomes em /public) */
+/** Imagens do carrossel (exact names em /public) */
 const ENTRADAS = [
   "/procedimento.png",
   "/procedimento1.png",
@@ -17,16 +16,10 @@ const ENTRADAS = [
   "/procedimento4.png",
 ];
 
-
 export default function Page() {
   return (
     <main className="relative min-h-screen bg-[color:var(--brand-bg)] text-slate-100 overflow-hidden">
-      {/* BG mágico: aurora + grid + vignette */}
-      {/* container tipo “largura de celular” (um pouco menor) */}
-<div className="mt-8 mx-auto w-full max-w-[340px] sm:max-w-[400px]">
-  <Carousel images={ENTRADAS} interval={3500} />
-</div>
-
+      {/* BG (grid + vignette). Deixei sem a aurora, como combinamos */}
       <div className="bg-grid" aria-hidden="true" />
       <div className="bg-vignette" aria-hidden="true" />
 
@@ -72,7 +65,7 @@ export default function Page() {
             className="cta-telegram cta-pulse inline-flex items-center gap-3 rounded-2xl px-8 py-5 text-lg sm:text-xl font-extrabold text-white"
           >
             <Image
-              src="/telegram-blue.webp"  // arquivo em /public
+              src="/telegram-blue.webp"
               alt="Telegram"
               width={22}
               height={22}
@@ -96,8 +89,8 @@ export default function Page() {
             Confira algumas entradas
           </h2>
 
-          {/* container tipo “largura de celular” */}
-          <div className="mt-8 mx-auto w-full max-w-[430px] sm:max-w-[500px]">
+          {/* container tipo “largura de celular” (um pouco menor) */}
+          <div className="mt-8 mx-auto w-full max-w-[320px] sm:max-w-[380px]">
             <Carousel images={ENTRADAS} interval={3500} />
           </div>
         </div>
@@ -186,14 +179,14 @@ function Carousel({
         >
           {images.map((src, i) => (
             <div key={src + i} className="min-w-full">
-              {/* quadro com proporção retrato */}
+              {/* quadro retrato */}
               <div className="relative w-full aspect-[9/16] sm:aspect-[10/16] bg-black/30">
                 <Image
                   src={src}
                   alt={`Entrada ${i + 1}`}
                   fill
                   className="object-contain"
-                  sizes="(max-width: 640px) 100vw, 500px"
+                  sizes="(max-width: 640px) 100vw, 380px"
                   priority={i === 0}
                 />
               </div>
