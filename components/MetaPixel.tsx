@@ -9,21 +9,19 @@ declare global {
   }
 }
 
-const pixelId = process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID;
+// ↳ use SEMPRE o mesmo nome de ENV que está na Vercel
+const pixelId = process.env.NEXT_PUBLIC_FB_PIXEL_ID;
 
 export default function MetaPixel() {
-  // Chame os hooks SEMPRE (regra dos hooks)
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  // PageView a cada navegação
   useEffect(() => {
     if (typeof window !== "undefined" && typeof window.fbq === "function") {
       window.fbq("track", "PageView");
     }
   }, [pathname, searchParams]);
 
-  // Sem Pixel ID? Não injeta scripts
   if (!pixelId) return null;
 
   return (
