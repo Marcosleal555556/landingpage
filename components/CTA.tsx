@@ -1,48 +1,78 @@
 "use client";
-import { motion } from "framer-motion";
 
-declare global {
-  interface Window {
-    fbq?: (method: string, ...args: unknown[]) => void;
-  }
-}
+import * as React from "react";
+
+type CTAProps = {
+  href: string;
+  children: React.ReactNode;
+  className?: string;
+  /** rótulo pra identificar qual botão foi clicado (aparece no event_source_url) */
+  label?: string;
+  /** nome do evento do Meta Pixel/CAPI */
+  eventName?: string; // ex: "Lead", "Subscribe"
+  /** abrir em nova aba */
+  newTab?: boolean;
+};
 
 export default function CTA({
   href,
   children,
-  event = "Lead",
-  label,
   className,
-}: {
-  href: string;
-  children: React.ReactNode;
-  event?: string;
-  label?: string;        // ex.: "hero"
-  className?: string;    // permite customizar cor/estilo do botão
-}) {
-  const onClick = () => {
+  label = "cta",
+  eventName = "Lead",
+  newTab = false,
+}: CTAProps) {
+  const onClick = React.useCallback(() => {
+    // 1) gera um id único pra dedupe entre navegador e servidor
+    const eventID = crypto.randomUUID();
+
+    // 2) Pixel do navegador (se o fbevents.js carregou)
     if (typeof window !== "undefined" && typeof window.fbq === "function") {
-      if (label) {
-        window.fbq("track", event, { label });
-      } else {
-        window.fbq("track", event);
+      try {
+        window.fbq("track", eventName, {}, { eventID });
+      } catch {
+        /* ignore */
       }
     }
-  };
 
-  // estilo padrão (se não passar className)
-  const base =
-    "inline-flex items-center gap-2 rounded-2xl px-5 py-3 font-medium transition bg-[color:var(--brand-1)] text-slate-900 hover:bg-[color:var(--brand-1)]/90 shadow-lg";
+    // 3) Conversions API (servidor) — envia MESMO event_id
+    try {
+      const payload = {
+        event_name: eventName,
+        event_id: eventID,
+        event_source_url: `${location.href}?cta=${encodeURIComponent(label)}`,
+      };
+
+      const body = JSON.stringify(payload);
+
+      if ("sendBeacon" in navigator) {
+        const blob = new Blob([body], { type: "application/json" });
+        navigator.sendBeacon("/api/fb-capi", blob);
+      } else {
+        // fallback
+        fetch("/api/fb-capi", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body,
+          keepalive: true,
+        }).catch(() => {});
+      }
+    } catch {
+      /* ignore */
+    }
+    // não bloqueia a navegação
+  }, [eventName, label]);
 
   return (
-    <motion.a
-      whileHover={{ scale: 1.03 }}
-      whileTap={{ scale: 0.98 }}
+    <a
       href={href}
       onClick={onClick}
-      className={className ?? base}
+      data-cta={label}
+      className={className}
+      target={newTab ? "_blank" : undefined}
+      rel={newTab ? "noopener noreferrer" : undefined}
     >
       {children}
-    </motion.a>
+    </a>
   );
 }
